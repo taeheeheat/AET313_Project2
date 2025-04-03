@@ -1,7 +1,7 @@
-#include <Servo.h>
+#include <Servo.h> //changes test! 
 
 Servo servo1; //create servo variable
-const int buttonPin = 2;
+const int buttonPin = 2; //sets pin to 2
 
 void setup() {
   servo1.attach(9); // attaches the servo on pin 9

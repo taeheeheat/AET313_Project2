@@ -14,5 +14,4 @@ void loop() {
   } else {
     servo1.write(0);
   }
-
 }

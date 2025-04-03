@@ -10,7 +10,7 @@ void setup() {
 
 void loop() {
   if (digitalRead(buttonPin) == HIGH {
-    servo1.write(180); //tells the servo what angle to turn to 0-180
+    servo1.write(90); //the servo turn to 90 degree
   } else {
     servo1.write(0);
   }

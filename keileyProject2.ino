@@ -1,6 +1,7 @@
 #include <Servo.h>
 
 const int NUM_HOUSES = 3;
+const int NUM_WOLVES = 2;
 
 //servo
 Servo houseServos[NUM_HOUSES];
@@ -12,7 +13,7 @@ const int wolfPin = 11;
 
 //btn pin
 const int pigBtns[NUM_HOUSES] = {2, 3, 4}; //2-straw, 3-stick, 4-brick
-const int wolfBtns[NUM_HOUSES] = {5, 6, 7}; //5-straw, 6-stick, 7-brick
+const int wolfBtns[NUM_WOLVES] = {5, 6}; //5-straw, 6-stick
 const int ledBtn = 12;
 const int ledPin = 13;
 
@@ -24,8 +25,10 @@ void setup() {
   for (int i = 0; i < NUM_HOUSES; i++) {
     houseServos[i].attach(housePins[i]);
     pinMode(pigBtns[i], INPUT);
-    pinMode(wolfBtns[i], INPUT);
   }
+  for (int i = 0; i < NUM_WOLVES; i++) {
+    pinMode(wolfBtns[i], INPUT);
+  } 
   wolfServo.attach(wolfPin);
   pinMode(ledPin, OUTPUT);
 }
@@ -53,7 +56,7 @@ void loop() {
   }
 
   // Wolf makes each houses' servo turns 0 degree
-  for (int i = 0; i < NUM_HOUSES; i++) {
+  for (int i = 0; i < NUM_WOLVES; i++) {
     if (digitalRead(wolfBtns[i]) == HIGH && houseOpen[i]) {
       houseServos[i].write(0);
       houseOpen[i] = false;

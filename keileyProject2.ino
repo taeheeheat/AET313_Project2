@@ -21,17 +21,22 @@ const int ledPin = 13;
 bool houseOpen[NUM_HOUSES] = {false, false, false};
 bool wolf = false;
 
+
 void setup() {
+ 
   for (int i = 0; i < NUM_HOUSES; i++) {
+    houseServos[i].write(0);
+    wolfServo.write(0);
     houseServos[i].attach(housePins[i]);
     pinMode(pigBtns[i], INPUT);
   }
   for (int i = 0; i < NUM_WOLVES; i++) {
     pinMode(wolfBtns[i], INPUT);
-  } 
+  }
   wolfServo.attach(wolfPin);
   pinMode(ledPin, OUTPUT);
 }
+
 
 void loop() {
   // Each pig makes each houses' servo turns 180 degree
@@ -60,7 +65,7 @@ void loop() {
     if (digitalRead(wolfBtns[i]) == HIGH && houseOpen[i]) {
       houseServos[i].write(0);
       houseOpen[i] = false;
-
+      
       delay(100);
     }
   }
@@ -68,7 +73,21 @@ void loop() {
   //when wolf is falling down to the pot
   if (digitalRead(ledBtn) == HIGH) {
     digitalWrite(ledPin, HIGH);
+    if (houseOpen[2]) {
+      houseServos[2].write(0);
+      houseOpen[2] = false;
+    }
+    if (wolf) {
+      wolfServo.write(0);
+      wolf = false;
+    }
   } else {
     digitalWrite(ledPin, LOW);
   }
 }
+
+
+
+
+
+

@@ -15,15 +15,16 @@ const int wolfPin = 11;
 const int pigBtns[NUM_HOUSES] = {2, 3, 4}; //2-straw, 3-stick, 4-brick
 const int wolfBtns[NUM_WOLVES] = {5, 6}; //5-straw, 6-stick
 const int ledBtn = 12;
+
+//led pin
 const int ledPin = 13;
 
-// state check
+//state check
 bool houseOpen[NUM_HOUSES] = {false, false, false};
 bool wolf = false;
 
 
 void setup() {
- 
   for (int i = 0; i < NUM_HOUSES; i++) {
     houseServos[i].write(0);
     wolfServo.write(0);
@@ -39,13 +40,13 @@ void setup() {
 
 
 void loop() {
-  // Each pig makes each houses' servo turns 180 degree
+  //each pig makes each house's servo turn 180 degrees
   for (int i = 0; i < NUM_HOUSES; i++) {
     if (digitalRead(pigBtns[i]) == HIGH && !houseOpen[i]) {
       houseServos[i].write(180);
       houseOpen[i] = true;
 
-      // brickPigBtn activates --> wolf servo give a wolf pieces
+      //brickPigBtn activates --> wolf servo gives a wolf piece
       if (i == 2) {
         if (!wolf) {
           wolfServo.write(90);
@@ -60,7 +61,7 @@ void loop() {
     }
   }
 
-  // Wolf makes each houses' servo turns 0 degree
+  //wolf makes each house's servo turn 0 degrees
   for (int i = 0; i < NUM_WOLVES; i++) {
     if (digitalRead(wolfBtns[i]) == HIGH && houseOpen[i]) {
       houseServos[i].write(0);
@@ -70,7 +71,7 @@ void loop() {
     }
   }
 
-  //when wolf is falling down to the pot
+  //when the wolf is falling into the pot
   if (digitalRead(ledBtn) == HIGH) {
     digitalWrite(ledPin, HIGH);
     if (houseOpen[2]) {
